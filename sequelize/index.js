@@ -1,18 +1,32 @@
+// importing from library
 const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
+
+// importing connection 
 const connection = require("./src/config/Connection");
-const userController=require("./src/controller/usercontroller")
 
+// importing endpoints
+const EndPoints=require("./src/routes/userRoute")
 
+// initializing app
 const app = express();
+
 app.use(express.json());
+app.use(cors());
 
-app.use("",userController)
+// routes
+app.use("/user/api/v1",EndPoints );
 
-app.listen(2345, async () => {
+// delcalring port
+const port = process.env.PORT || 8080;
+
+// listing app
+app.listen(port, async () => {
   try {
     await connection.authenticate();
 
-    console.log("connected on port 2345....");
+    console.log(`listing on port ${port} .... `);
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
