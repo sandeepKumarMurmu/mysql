@@ -1,7 +1,16 @@
+// importing from library
 const { Sequelize } = require("sequelize");
+require("dotenv").config();
 
+// getting enviroment variavles
+const db = process.env.DATABASE;
+const user = process.env.USER;
+const host = process.env.HOST;
+const password = process.env.PASSWORD;
+const dialect = process.env.DIALECT;
 
-module.exports = new Sequelize("allen_1", "root", "XYZ4648s@nDEEP", {
-  host: "localhost",
-  dialect: "mysql",
+// exporting connection
+module.exports = new Sequelize(db, user, password, {
+  host,
+  dialect,
 });
