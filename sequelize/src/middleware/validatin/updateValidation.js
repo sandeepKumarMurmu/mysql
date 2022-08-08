@@ -2,12 +2,20 @@
 const { validationResult } = require("express-validator");
 
 const updateValidation = async (req, res, next) => {
-  let errors = validationResult(req);
+  let { errors } = validationResult(req);
 
-  if (!errors.isEmpty()) {
+  let newerr = [];
+
+  for (var i = 0; i < errors.length; i++) {
+    if (req.body[errors[i].param]) {
+      newerr.push(errors[i]);
+    }
+  }
+
+  if (newerr.length > 0) {
     return res
       .status(400)
-      .json({ message: errors.errors[0].msg, data: [], status: false });
+      .json({ message: newerr[0].msg, data: [], status: false });
   }
 
   next();
