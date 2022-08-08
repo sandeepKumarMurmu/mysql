@@ -1,14 +1,10 @@
 // importing user from
 const { User } = require("../../model/userMode/UserModel");
 
-// hashing function
-const Hashing = require("../../utils/hashPassword");
-
 // create user function
 const CreateUser = async (req, res) => {
   const { firstName, middleName, lastName, gender, dob, email, password } =
     req.body;
-  const hashedPassword = Hashing(password);
 
   try {
     const user = await User.create({
@@ -18,7 +14,7 @@ const CreateUser = async (req, res) => {
       gender,
       dateOfBirth: dob,
       email,
-      password: hashedPassword,
+      password,
       token: "",
     });
     return res
