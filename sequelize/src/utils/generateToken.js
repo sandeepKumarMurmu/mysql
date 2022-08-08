@@ -6,5 +6,5 @@ require("dotenv").config();
 const tokenKey = process.env.TOKEN_KEY;
 
 module.exports = (data) => {
-  return jwt.sign(data, tokenKey, { expiresIn: 60*10 });
+  return jwt.sign(data, tokenKey, { expiresIn: 60*30 });
 };
