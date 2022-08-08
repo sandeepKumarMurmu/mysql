@@ -8,7 +8,8 @@ const LoginUser = require("../controller/loginController/login");
 const getAll = require("../controller/getUserController/getAll");
 const getOne = require("../controller/getUserController/getOne");
 const deleteOne = require("../controller/deleteController/deleteOne");
-const updatedOne = require("../controller/updatecontroller/update")
+const updatedOne = require("../controller/updatecontroller/update");
+
 // importing validations
 const userValidation = require("../middleware/validatin/userValidation");
 const loginValidation = require("../middleware/validatin/loginValidation");
@@ -23,12 +24,12 @@ const route = express.Router();
 route.post(
   "/new-user",
   body("firstName").isLength({ min: 4 }).withMessage("First name is too short"),
-  body("email").isEmail().withMessage("email is not valid"),
+  body("email").isEmail().withMessage("Email is not valid"),
   body("password")
     .isAlphanumeric()
     .isLength({ min: 6 })
-    .withMessage("passwort is less then six character or is not strong"),
-  body("dob").isDate().withMessage("date of birth is not in valid format"),
+    .withMessage("Password must be greater than six character / alphanumaric"),
+  body("dob").isDate().withMessage("DOB must be in YYYY-MM-DD format"),
   userValidation,
   CreateUser
 );
@@ -49,6 +50,13 @@ route.delete("/remove-user/:id", tokenVerification, deleteOne);
 // update one
 route.patch(
   "/update-user/:id",
+  body("firstName").isLength({ min: 4 }).withMessage("First name is too short"),
+  body("email").isEmail().withMessage("Email is not valid"),
+  body("password")
+    .isAlphanumeric()
+    .isLength({ min: 6 })
+    .withMessage("Password must be greater than six character / alphanumaric"),
+  body("dob").isDate().withMessage("DOB must be in YYYY-MM-DD format"),
   updateValidation,
   tokenVerification,
   updatedOne
