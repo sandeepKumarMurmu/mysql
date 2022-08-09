@@ -6,8 +6,7 @@ const tokenKey = process.env.TOKEN_KEY;
 
 const tokenVerification = async (req, res, next) => {
   const { token } = req.headers;
-
-  // console.log(token)
+  
   try {
     jwt.verify(token, tokenKey);
     next();
