@@ -5,7 +5,7 @@ const { User } = require("../../../model/userModel/UserModel");
 const GetById = async (req, res) => {
   const { id } = req.params;
   try {
-    const data = await User.findOne({ where: { id } });
+    const data = await User.findByPk(+id);
     return res
       .status(200)
       .json({ message: "login success", data, status: true });
