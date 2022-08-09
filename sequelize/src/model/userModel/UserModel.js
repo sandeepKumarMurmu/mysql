@@ -8,20 +8,27 @@ const db = require("../../config/Connection");
 const User = db.define(
   "user",
   {
-    token: { type: DataTypes.STRING },
     firstName: { type: DataTypes.STRING, allowNull: false, trim: true },
-    lastName: { type: DataTypes.STRING, allowNull: false, trim: true },
+    lastName: { type: DataTypes.STRING, allowNull: true, trim: true },
     middleName: { type: DataTypes.STRING, allowNull: true, trim: true },
     gender: { type: DataTypes.STRING, allowNull: false, trim: true },
     dateOfBirth: { type: DataTypes.DATE, allowNull: false },
-    email: { type: DataTypes.STRING, allowNull: false, trim: true },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      trim: true,
+      unique: true,
+    },
     password: { type: DataTypes.STRING, allowNull: false },
   },
   { timestamps: true }
 );
 
 // synchronisig with databse
-db.sync();
+
+db.sync().then((res) => {
+  console.log("table is created------------------");
+});
 
 // exporting model
 module.exports = { User };
