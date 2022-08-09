@@ -5,6 +5,7 @@ const TokenGenerator = require("../../../utils/functions/generateToken");
 const LoginUser = async (req, res) => {
   try {
     const token = TokenGenerator(req.body);
+
     return res
       .status(200)
       .json({ message: "login success", data: token, status: true });
