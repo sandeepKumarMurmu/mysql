@@ -3,7 +3,7 @@ const express = require("express");
 const { body } = require("express-validator");
 
 // importing controllers
-const updatedOne = require("../../../controller/updatecontroller/update");
+const updatedOne = require("../../../controller/user/updatecontroller/update");
 // importing validations
 const updateValidation = require("../../../middleware/validation/updateValidation");
 const tokenVerification = require("../../../middleware/validation/varifyToken");

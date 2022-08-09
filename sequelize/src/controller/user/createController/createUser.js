@@ -1,5 +1,5 @@
 // importing user from
-const { User } = require("../../model/userMode/UserModel");
+const { User } = require("../../../model/userModel/UserModel");
 
 // create user function
 const CreateUser = async (req, res) => {

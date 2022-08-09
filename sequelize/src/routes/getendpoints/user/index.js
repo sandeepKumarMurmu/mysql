@@ -2,9 +2,9 @@
 const express = require("express");
 
 // importing controllers
-const getAll = require("../../../controller/getUserController/getAll");
-const getOne = require("../../../controller/getUserController/getOne");
-const getByName = require("../../../controller/getUserController/searchByName");
+const getAll = require("../../../controller/user/getUserController/getAll");
+const GetById = require("../../../controller/user/getUserController/getById");
+const getByName = require("../../../controller/user/getUserController/searchByName");
 // importing validations
 const tokenVerification = require("../../../middleware/validation/varifyToken");
 
@@ -18,7 +18,7 @@ route.get("/get-user/byname", tokenVerification, getByName)
 route.get("/get-user", tokenVerification, getAll);
 
 // get by id
-route.get("/get-user/:id", tokenVerification, getOne);
+route.get("/get-user/:id", tokenVerification, GetById);
 
 
 // exporting route

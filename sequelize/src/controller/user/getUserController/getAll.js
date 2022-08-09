@@ -1,5 +1,5 @@
 // importing User model
-const { User } = require("../../model/userMode/UserModel");
+const { User } = require("../../../model/userModel/UserModel");
 const { Op } = require("sequelize");
 
 // create user function

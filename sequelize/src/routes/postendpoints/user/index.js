@@ -3,8 +3,8 @@ const express = require("express");
 const { body } = require("express-validator");
 
 // importing controllers
-const CreateUser = require("../../../controller/createController.js/createUser");
-const LoginUser = require("../../../controller/loginController/login");
+const CreateUser = require("../../../controller/user/createController/createUser");
+const LoginUser = require("../../../controller/user/loginController/login");
 // importing validations
 const loginValidation = require("../../../middleware/validation/loginValidation");
 const userValidation = require("../../../middleware/validation/userValidation");

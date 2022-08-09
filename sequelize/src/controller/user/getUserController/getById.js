@@ -1,8 +1,8 @@
 // importing User model
-const { User } = require("../../model/userMode/UserModel");
+const { User } = require("../../../model/userModel/UserModel");
 
 // create user function
-const getOne = async (req, res) => {
+const GetById = async (req, res) => {
   const { id } = req.params;
   try {
     const data = await User.findOne({ where: { id } });
@@ -19,4 +19,4 @@ const getOne = async (req, res) => {
   }
 };
 
-module.exports = getOne;
+module.exports = GetById;

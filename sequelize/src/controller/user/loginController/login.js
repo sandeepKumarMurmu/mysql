@@ -1,5 +1,5 @@
 // importing token generator
-const TokenGenerator = require("../../utils/generateToken");
+const TokenGenerator = require("../../../utils/functions/generateToken");
 
 // create user function
 const LoginUser = async (req, res) => {

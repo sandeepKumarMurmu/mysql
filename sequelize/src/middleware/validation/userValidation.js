@@ -2,10 +2,10 @@
 const { validationResult } = require("express-validator");
 
 // importing function for hash password
-const Hashing = require("../../utils/hashPassword");
+const Hashing = require("../../utils/functions/hashPassword");
 
 // importing user model
-const { User } = require("../../model/userMode/UserModel");
+const { User } = require("../../model/userModel/UserModel");
 
 const userValidation = async (req, res, next) => {
   const { email, password } = req.body;

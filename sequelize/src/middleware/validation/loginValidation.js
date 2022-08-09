@@ -2,10 +2,10 @@
 const { validationResult } = require("express-validator");
 
 // importing user model
-const { User } = require("../../model/userMode/UserModel");
+const { User } = require("../../model/userModel/UserModel");
 
 // // comparing hashed function
-const compare = require("../../utils/comparePassword");
+const compare = require("../../utils/functions/comparePassword");
 
 const loginValidation = async (req, res, next) => {
   let errors = validationResult(req);

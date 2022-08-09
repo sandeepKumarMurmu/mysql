@@ -3,7 +3,7 @@ const express = require("express");
 
 
 // importing controllers
-const deleteOne = require("../../../controller/deleteController/deleteOne");
+const deleteOne = require("../../../controller/user/deleteController/deleteOne");
 
 // importing validations
 const tokenVerification = require("../../../middleware/validation/varifyToken");

@@ -1,18 +1,19 @@
 // importing User model
-const { User } = require("../../model/userMode/UserModel");
+const { User } = require("../../../model/userModel/UserModel");
 const { Op } = require("sequelize");
 // create user function
 const getByName = async (req, res) => {
   // return res.send("connected");
   const list = req.query.name.trim().split(" ");
- 
-  let FirstName = list[0]||'';
-  let LastName = list[list.length-1]||'';
+
+  let FirstName = list[0]||"";
+  let LastName = list[list.length-1]||"";
+  
 
   try {
     const data = await User.findAll({
       where: {
-        [Op.or]: [{ firstName:`${FirstName}` }, { lastName: `${LastName}` }],
+        [Op.or]: [{ firstName: `${FirstName}` }, { lastName: `${LastName}` }],
       },
     });
     return res
