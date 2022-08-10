@@ -1,8 +1,9 @@
 const Sequelize = require("sequelize");
 require("dotenv").config();
-const User = require("../model/user/user");
-const contact = require("../model/contactInfo/contact");
-const { has } = require("sequelize");
+const reader = require("../model/reader/reader");
+const author = require("../model/autor/author");
+const book = require("../model/books/book");
+const vehicle = require("../model/vehicle/vehicle");
 
 const db = {};
 
@@ -16,12 +17,17 @@ const sequelize = new Sequelize(database, user, password, { host, dialect });
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.userx = User(sequelize, Sequelize);
-db.contact = contact(sequelize, Sequelize);
 
-db.userx.hasOne(db.contact, {
-  foreignKey: "userxId",
-});
+db.reader = reader(sequelize, Sequelize);
+db.author = author(sequelize, Sequelize);
+db.book = book(sequelize, Sequelize);
+db.vehicle = vehicle(sequelize, Sequelize);
+
+db.reader.hasOne(db.vehicle, { foreignKey: "readerId" });
+db.book.belongsToMany(db.reader, { through: "bookReader" });
+db.reader.belongsToMany(db.book, { through: "bookReader" });
+db.author.belongsToMany(db.book, { through: "bookAuthor" });
+db.book.belongsToMany(db.author, { through: "bookAuthor" });
 
 db.sequelize.sync().then(() => {
   console.log("connected to db ---------------------");
