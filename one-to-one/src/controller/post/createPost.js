@@ -1,9 +1,9 @@
-const { post } = require("../../config/db");
+const { user_post } = require("../../config/db"); //user_post model
 
+// controller to create user_post controller
 module.exports = async (req, res) => {
   try {
-    console.log(req.body);
-    const data = await post.create(req.body);
+    const data = await user_post.create(req.body);
     return res
       .status(200)
       .json({ message: "inside created post successfull", data });

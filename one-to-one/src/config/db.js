@@ -1,8 +1,10 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const User = require("../models/userModel");
-const Post = require("../models/postModel");
+// importing model functions
+const master_user = require("../models/userModel");
+const user_post = require("../models/postModel");
 
+// enviroment variable for connection
 const database = process.env.DATABASE;
 const password = process.env.PASSWORD;
 const user = process.env.USER;
@@ -11,6 +13,7 @@ const dialect = process.env.DIALECT;
 
 const db = {};
 
+// creating connection model
 const seq = new Sequelize(database, user, password, {
   host,
   dialect,
@@ -19,14 +22,15 @@ const seq = new Sequelize(database, user, password, {
 
 db.sequelize = seq;
 
-db.user = User(seq, DataTypes);
-db.post = Post(seq, DataTypes);
+db.master_user = master_user(seq, DataTypes);
+db.user_post = user_post(seq, DataTypes);
 
-db.user.hasOne(db.post, { foreignKey: "user_id" });
-db.post.belongsTo(db.user, { foreignKey: "user_id" });
-
+// relationships
+db.user_post.hasOne(db.user_post, { foreignKey: "master_user_id" });
+db.user_post.belongsTo(db.user_post, { foreignKey: "master_user_id" });
+// syncing to database
 db.sequelize.sync().then(() => {
   console.log(`synchronized to data base`);
 });
-
+// exporting connection model
 module.exports = db;

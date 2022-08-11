@@ -1,14 +1,20 @@
+//user's post model to create post
 module.exports = (db, dataType) => {
-  const post = db.define(
-    "post",
+  const user_post = db.define(
+    "user_post",
     {
-      title: { type: dataType.STRING },
-      discription: { type: dataType.STRING },
+      post_id: {
+        type: dataType.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      post_title: { type: dataType.STRING },
+      post_description: { type: dataType.STRING },
     },
     {
       timestamps: true,
     }
   );
 
-  return post;
+  return user_post;
 };

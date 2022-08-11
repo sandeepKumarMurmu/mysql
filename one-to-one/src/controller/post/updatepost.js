@@ -1,11 +1,12 @@
-const { post, user } = require("../../config/db");
+const { user_post, master_user } = require("../../config/db"); //user_post and master_user models
 
+// constroller for updating user_post
 module.exports = async (req, res) => {
   try {
-    const data = await post.update(
-      { title: "update_title" },
+    const data = await user_post.update(
+      { post_title: "update_title" },
       {
-        include: [{ model: user }],
+        include: [{ model: master_user }],
         where: { id: 2 },
       }
     );
