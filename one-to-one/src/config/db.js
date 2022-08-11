@@ -29,7 +29,7 @@ db.user_post = user_post(seq, DataTypes);
 db.user_post.hasOne(db.user_post, { foreignKey: "master_user_id" });
 db.user_post.belongsTo(db.user_post, { foreignKey: "master_user_id" });
 // syncing to database
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   console.log(`synchronized to data base`);
 });
 // exporting connection model
