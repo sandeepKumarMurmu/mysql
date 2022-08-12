@@ -4,14 +4,8 @@ const { user_post, master_user } = require("../../config/db");
 module.exports = async (req, res) => {
   try {
     const data = await user_post.findAll({
-      include: [
-        {
-          model: master_user,
-          attributes: ["master_user_name", "master_user_email"],
-        },
-      ],
-      where: { id: 2 },
-      attributes: ["post_title"],
+      include:master_user,
+      where:{post_id:1}
     });
     return res
       .status(200)

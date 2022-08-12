@@ -18,7 +18,6 @@ const db = {};
 const seq = new Sequelize(database, user, password, {
   host,
   dialect,
-  logging: false,
 });
 
 db.sequelize = seq;
@@ -27,15 +26,17 @@ db.master_user = master_user(seq, DataTypes);
 db.user_post = user_post(seq, DataTypes);
 db.book = book(seq, DataTypes);
 
-// relationships 
+// relationships
 db.master_user.hasOne(db.user_post, { foreignKey: "master_user_id" });
-db.master_user.belongsTo(db.user_post, { foreignKey: "master_user_id" });
+db.user_post.belongsTo(db.master_user, { foreignKey: "master_user_id" });
 
+// one to many
 db.master_user.hasMany(db.book, { foreignKey: "master_user_id" });
-db.master_user.belongsTo(db.book, { foreignKey: "master_user_id" });
+db.book.belongsTo(db.master_user, { foreignKey: "master_user_id" });
 // syncing to database
 db.sequelize.sync().then(() => {
   console.log(`synchronized to data base`);
 });
 // exporting connection model
 module.exports = db;
+ 
