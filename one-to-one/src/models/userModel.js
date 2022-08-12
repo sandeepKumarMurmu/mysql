@@ -4,8 +4,8 @@ module.exports = (db, dataType) => {
     "master_user",
     {
       master_user_id: {
-        type: dataType.STRING,
-        autoIcrement: true,
+        type: dataType.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
       },
       master_user_name: { type: dataType.STRING },
