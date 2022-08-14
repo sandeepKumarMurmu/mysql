@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
   try {
     const data = await user_post.findAll({
       include:master_user,
-      where:{post_id:1}
+      // where:{post_id:1}
     });
     return res
       .status(200)
