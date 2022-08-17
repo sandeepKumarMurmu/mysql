@@ -2,10 +2,7 @@ const { master_user, user_post, book } = require("../../config/db"); //master_us
 
 module.exports = async (req, res) => {
   try {
-    const data = await master_user.findAll({
-      include: user_post,
-      where: { master_user_id: 1 },
-    });
+    const data = await master_user.findAll();
     return res
       .status(200)
       .json({ message: "inside get user successfull", data });

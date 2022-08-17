@@ -34,18 +34,24 @@ db.join_table = post_user_join_table(
   db.user_post
 );
 
-// // relationships
-// db.master_user.hasOne(db.user_post, { foreignKey: "master_user_id" });
-// db.user_post.belongsTo(db.master_user, { foreignKey: "master_user_id" });
+// relationships
+db.master_user.hasOne(db.user_post, { foreignKey: "master_user_id" });
+db.user_post.belongsTo(db.master_user, { foreignKey: "master_user_id" });
 
 // // one to many
 // db.master_user.hasMany(db.book, { foreignKey: "master_user_id" });
 // db.book.belongsTo(db.master_user, { foreignKey: "master_user_id" });
 
-db.master_user.belongsToMany(db.user_post, { through: db.join_table });
-db.user_post.belongsToMany(db.master_user, { through: db.join_table });
+// db.master_user.belongsToMany(db.user_post, {
+//   through: db.join_table,
+//   foreignKey: "master_user_id",
+// });
+// db.user_post.belongsToMany(db.master_user, {
+//   through: db.join_table,
+//   foreignKey: "user_post_id",
+// });
 // syncing to database
-db.sequelize.sync().then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   console.log(`synchronized to data base`);
 });
 // exporting connection model

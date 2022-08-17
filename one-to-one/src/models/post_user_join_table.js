@@ -4,7 +4,7 @@ module.exports = (db, dataType, user, post) => {
     "join_table",
     {},
     {
-      timestamps: false,
+      timestamps: true,
     }
   );
 
