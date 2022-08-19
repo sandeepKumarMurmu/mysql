@@ -22,6 +22,7 @@ module.exports = connection.define(
       allowNull: false,
       unique: true,
     },
+    studentType: { type: DataTypes.STRING, allowNull: false },
     studentAddress: { type: DataTypes.STRING(100) },
   },
   { timestamps: true }

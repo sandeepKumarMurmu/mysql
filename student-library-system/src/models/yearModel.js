@@ -5,18 +5,14 @@ const connection = require("../config/connection");
 const { DataTypes } = require("sequelize");
 
 // creating and exporting year model
-module.exports = connection.define(
-  "year",
-  {
-    yearId: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    yearName: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+module.exports = connection.define("year", {
+  yearId: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
   },
-  { timestamps: true }
-);
+  yearName: {
+    type: DataTypes.STRING(6),
+    allowNull: false,
+  },
+});
