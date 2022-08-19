@@ -6,7 +6,7 @@ const { DataTypes } = require("sequelize");
 
 // creating and exporting authorBookJunction model
 module.exports = connection.define(
-  "authorStramJunction",
+  "authorStreamJunction",
   {
     authorStramJunctionId: {
       type: DataTypes.INTEGER,

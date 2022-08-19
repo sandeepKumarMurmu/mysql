@@ -6,7 +6,7 @@ const createBook = async (req, res) => {
   const { title, quantity, catogery, stream } = req.body;
   try {
     const bookData = await Book.create({
-      bookTitile: title,
+      bookTitle: title,
       bookQuantity: quantity,
       bookCatogery: catogery,
       bookStatus: quantity > 0 ? true : false,

@@ -3,11 +3,11 @@ const Student = require("../../models/studentModel");
 
 //create  Student controller
 const createStudent = async (req, res) => {
-  const { fullName, eamil, type, address, stream, year } = req.body;
+  const { fullName, email, type, address, stream, year } = req.body;
   try {
     const studentData = await Student.create({
       studentFullName: fullName,
-      studentEmail: eamil,
+      studentEmail: email,
       studentType: type,
       studentAddress: address,
       streamId: stream,
@@ -22,6 +22,7 @@ const createStudent = async (req, res) => {
       message: "something wrong inside creat student conrtoller",
       data: null,
       status: false,
+      e,
     });
   }
 };
