@@ -2,11 +2,11 @@
 const express = require("express");
 
 // importing controllers
-const { createYear } = require("../controllers/year/createYear");
+const { createAuthor } = require("../controllers/author/createAuthor");
 
 // initialing route
 const route = express.Router();
 
-route.post("/", createYear);
+route.post("/", createAuthor);
 
 module.exports = route;

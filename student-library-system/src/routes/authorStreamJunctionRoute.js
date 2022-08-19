@@ -2,11 +2,13 @@
 const express = require("express");
 
 // importing controllers
-const { createYear } = require("../controllers/year/createYear");
+const {
+  createAuthorstreamJunction,
+} = require("../controllers/author_stream_junction/create_author_stream_junction");
 
 // initialing route
 const route = express.Router();
 
-route.post("/", createYear);
+route.post("/", createAuthorstreamJunction);
 
 module.exports = route;

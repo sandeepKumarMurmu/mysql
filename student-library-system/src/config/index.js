@@ -1,28 +1,14 @@
-// importing from library
-const { DataTypes } = require("sequelize");
-
-// importing connection details
-const connection = require("./connection");
-
-// importing models
-const student = require("../models/studentModel");
-const stream = require("../models/streamModel");
-const year = require("../models/yearModel");
-const book = require("../models/bookModel");
-const author = require("../models/authorModel");
-const studentBookJunction = require("../models/student_book_junction");
-const authorBookJunction = require("../models/author_book_junction");
-
 const db = {};
 
-db.connection = connection;
-db.student = student;
-db.stream = stream;
-db.year = year;
-db.book = book;
-db.author = author;
-db.studentBookJunction = studentBookJunction;
-db.authorBookJunction = authorBookJunction;
+db.connection = require("./connection");
+db.student = require("../models/studentModel");
+db.stream = require("../models/streamModel");
+db.year = require("../models/yearModel");
+db.book = require("../models/bookModel");
+db.author = require("../models/authorModel");
+db.studentBookJunction = require("../models/student_book_junction");
+db.authorBookJunction = require("../models/author_book_junction");
+db.authorStreamJunction = require("../models/author_stream_junction");
 
 // relation between stream and student
 db.stream.hasMany(db.student, { foreignKey: "streamId" });
@@ -52,12 +38,22 @@ db.author.belongsToMany(db.book, {
   foreignKey: "authorId",
 });
 
+// realtion between stream and author
+db.stream.belongsToMany(db.author, {
+  through: "authorstreamJunction",
+  foreignKey: "streamId",
+});
+db.author.belongsToMany(db.stream, {
+  through: "authorstreamJunction",
+  foreignKey: "authorId",
+});
+
 // relation between book and department
 db.stream.hasMany(db.book, { foreignKey: "streamId" });
 db.book.belongsTo(db.stream, { foreignKey: "streamId" });
 
 // synchronising tables with database
-db.connection.sync({ force: true }).then(({ models }) => {
+db.connection.sync({ force: false }).then(({ models }) => {
   console.log(`tables are created and the models are `);
   console.log(models);
 });

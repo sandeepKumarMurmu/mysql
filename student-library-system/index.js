@@ -6,9 +6,6 @@ require("dotenv").config();
 // importing connections
 const { connection } = require("./src/config/index");
 
-// importing routes
-const Routes = require("./src/routes/index");
-
 // initializing application
 const app = express();
 
@@ -16,10 +13,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-Routes(app);
+// giving access to all routes / endpoints
+require("./src/routes/index")(app);
+require("./src/utils/noRoute/noRoute")(app);
 
 // declaring port
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 // listining on port
 app.listen(PORT, async () => {
