@@ -1,6 +1,7 @@
-module.exports = (name, variable, Op, obj) => {
+module.exports = (name, variable, Op) => {
+  let obj = {};
   if (name !== undefined && name.trim().length)
-    obj[variable] = { [Op.substring]: name.trim() };
+    obj[variable] = { [Op]: name.trim().toLowerCase() };
 
   return obj;
 };

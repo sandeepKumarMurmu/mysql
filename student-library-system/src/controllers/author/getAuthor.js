@@ -1,11 +1,15 @@
+const { Op } = require("sequelize");
+// ------------------------------------------------------------------------------------------------------------------------------------------------
 // importing year model
 const Author = require("../../models/authorModel");
 const bookModel = require("../../models/bookModel");
 
-const mainFilter = require("../../utils/functions/mainFilter");
+// ------------------------------------------------------------------------------------------------------------------------------------------------
+// filter functions
+const fildFilter = require("../../utils/functions/mainFilter");
 
-const { Op } = require("sequelize");
-//create  author controller
+// ------------------------------------------------------------------------------------------------------------------------------------------------
+//get author controller
 const getAuthorbyId = async (req, res) => {
   try {
     const authorData = await Author.findByPk(+req.params.id, {
@@ -24,12 +28,26 @@ const getAuthorbyId = async (req, res) => {
     });
   }
 };
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------
+// search author by query
 const getBySearch = async (req, res) => {
-  let { name, stream } = req.query;
+  let { name, category } = req.query;
 
   try {
-    const authorData = await Author.findAll({
-      where: { ...mainFilter(name, "authorName", Op, {}) },
+    const authorData = await Author.findAndCountAll({
+      include: [
+        {
+          model: bookModel,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+          through: { attributes: [] },
+        },
+      ],
+      where: {
+        ...fildFilter(name, "authorName", Op.substring),
+        ...fildFilter(category, "authorCatogery", Op.eq),
+      },
+      attributes: { exclude: ["updatedAt", "createdAt"] },
     });
 
     return res
@@ -45,4 +63,6 @@ const getBySearch = async (req, res) => {
   }
 };
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------
+// exporting controllers
 module.exports = { getAuthorbyId, getBySearch };

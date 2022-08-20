@@ -36,7 +36,7 @@ const getStudentById = async (req, res) => {
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------
 //get Student by queries controller
 const getStudentBySearch = async (req, res) => {
-  const { name, stream, order } = req.query;
+  const { name, stream, order, orderByName } = req.query;
   console.log(orderFilter(order, "yearId"));
   try {
     const studentData = await Student.findAndCountAll({
@@ -44,13 +44,16 @@ const getStudentBySearch = async (req, res) => {
         { model: yearModel, attributes: ["yearName"] },
         {
           model: streamModel,
-          where: { ...fildFilter(stream, "streamName", Op, {}) },
+          where: { ...fildFilter(stream, "streamName", Op.substring) },
           attributes: ["streamName", "streamCode"],
         },
       ],
-      where: { ...fildFilter(name, "studentFullName", Op, {}) },
-      attributes: ["studentFullName", "studentId", "studentEmail"],
-      order: [...orderFilter(order, "yearId")],
+      where: { ...fildFilter(name, "studentFullName", Op.substring) },
+      attributes: { exclude: ["updatedAt", "createdAt"] },
+      order: [
+        ...orderFilter(order, "yearId"),
+        ...orderFilter(orderByName, "studentFullName"),
+      ],
     });
 
     return res.status(200).json({

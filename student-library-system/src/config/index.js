@@ -38,16 +38,6 @@ db.author.belongsToMany(db.book, {
   foreignKey: "authorId",
 });
 
-// realtion between stream and author
-db.stream.belongsToMany(db.author, {
-  through: "authorStreamJunction",
-  foreignKey: "streamId",
-});
-db.author.belongsToMany(db.stream, {
-  through: "authorStreamJunction",
-  foreignKey: "authorId",
-});
-
 // relation between book and department
 db.stream.hasMany(db.book, { foreignKey: "streamId" });
 db.book.belongsTo(db.stream, { foreignKey: "streamId" });
