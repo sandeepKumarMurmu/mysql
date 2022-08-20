@@ -1,15 +1,25 @@
-// importing year model
-const Student = require("../../models/studentModel");
-
+// library methode
 const { Op } = require("sequelize");
 
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------
+// models
+const Student = require("../../models/studentModel");
 const streamModel = require("../../models/streamModel");
 const yearModel = require("../../models/yearModel");
 
-//create  Student controller
-const getStudent = async (req, res) => {
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------
+// filter functions
+const fildFilter = require("../..//utils/functions/mainFilter");
+const orderFilter = require("../../utils/functions/orderFilter");
+
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------
+//get Student by id controller
+
+const getStudentById = async (req, res) => {
   try {
-    const studentData = await Student.findAll();
+    const studentData = await Student.findByPk(+req.params.id, {
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
 
     return res
       .status(200)
@@ -22,39 +32,29 @@ const getStudent = async (req, res) => {
     });
   }
 };
-const getStudentByName = async (req, res) => {
-  let mainFilter = {};
-  let modelFilter = {};
-  let { name, stream, year, orderbyname, orderbyyear } = req.query;
 
-  let byYear =
-    orderbyyear !== undefined &&
-    (orderbyyear.trim().toUpperCase() === "ASC" ||
-      orderbyyear.trim().toUpperCase() === "DESC")
-      ? orderbyyear.trim().toUpperCase()
-      : "ASC";
-
-  if (name !== undefined && name.trim().length)
-    mainFilter.studentFullName = { [Op.substring]: name.trim() };
-
-  if (stream !== undefined && stream.trim().length)
-    modelFilter.streamName = { [Op.substring]: stream.trim() };
-  if (year !== undefined && year.trim().length)
-    mainFilter.yearId = +year.trim();
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------
+//get Student by queries controller
+const getStudentBySearch = async (req, res) => {
+  const { name, stream, order } = req.query;
+  console.log(orderFilter(order, "yearId"));
   try {
     const studentData = await Student.findAndCountAll({
       include: [
-        { model: yearModel },
-        { model: streamModel, where: modelFilter },
+        { model: yearModel, attributes: ["yearName"] },
+        {
+          model: streamModel,
+          where: { ...fildFilter(stream, "streamName", Op, {}) },
+          attributes: ["streamName", "streamCode"],
+        },
       ],
-      where: mainFilter,
-      order: [["yearID", byYear]],
+      where: { ...fildFilter(name, "studentFullName", Op, {}) },
+      attributes: ["studentFullName", "studentId", "studentEmail"],
+      order: [...orderFilter(order, "yearId")],
     });
 
     return res.status(200).json({
-      message: studentData.count
-        ? "student recieved successfull"
-        : "no student found",
+      message: "student found",
       data: studentData,
       status: true,
     });
@@ -68,4 +68,6 @@ const getStudentByName = async (req, res) => {
   }
 };
 
-module.exports = { getStudent, getStudentByName };
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------
+//exporting controllers
+module.exports = { getStudentById, getStudentBySearch };
