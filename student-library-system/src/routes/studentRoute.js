@@ -4,11 +4,7 @@ const { body } = require("express-validator");
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // importing controllers
-const { createStudent } = require("../controllers/student/createStudent");
-const {
-  getStudentById,
-  getStudentBySearch,
-} = require("../controllers/student/getStudent");
+const studentController = require("../controllers/student/studentController");
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // middleware
@@ -21,6 +17,8 @@ const route = express.Router();
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // creating end points
+route.get("/get/:id", studentController.getStudentById);
+route.post("/get", studentController.getStudentBySearch);
 route.post(
   "/entry",
   validationMiddl(body).nameValidation,
@@ -29,10 +27,8 @@ route.post(
   validationMiddl(body).yearValidation,
   validationMiddl(body).streamValidation,
   inputValidation,
-  createStudent
+  studentController.createStudent
 );
-route.get("/get/:id", getStudentById);
-route.get("/get", getStudentBySearch);
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // exporting routes
