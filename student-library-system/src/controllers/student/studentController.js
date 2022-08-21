@@ -36,25 +36,34 @@ module.exports = {
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------
   //get Student by queries controller
   getStudentBySearch: async (req, res) => {
-    const { name, stream, order, orderByName } = req.query;
+    const { name, stream, order, orderByName, limit, page } = req.query;
     try {
       const studentData = await Student.findAndCountAll({
         include: [
-          { model: yearModel, attributes: ["yearName"] },
+          {
+            model: yearModel,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+          },
           {
             model: streamModel,
-            where: { ...fildFilter(stream, "streamName", Op.substring) },
-            attributes: ["streamName", "streamCode"],
+            where: {
+              ...filters.stringFilter(stream, "streamName", Op.substring),
+            },
+            attributes: { exclude: ["createdAt", "updatedAt"] },
           },
         ],
         where: {
           ...filters.stringFilter(name, "studentFullName", Op.substring),
         },
-        attributes: { exclude: ["updatedAt", "createdAt"] },
+        attributes: {
+          exclude: ["updatedAt", "createdAt", "yearId", "streamId"],
+        },
         order: [
           ...filters.orderFitler(order, "yearId"),
           ...filters.orderFitler(orderByName, "studentFullName"),
         ],
+
+        ...filters.pagination(page, limit),
       });
 
       return res.status(200).json({

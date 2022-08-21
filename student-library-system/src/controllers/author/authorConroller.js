@@ -6,7 +6,7 @@ const bookModel = require("../../models/bookModel");
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // filter functions
-const fildFilter = require("../../utils/functions/mainFilter");
+const filterFunction = require("../../utils/functions/filterFunction");
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // exporting controllers
@@ -46,8 +46,8 @@ module.exports = {
           },
         ],
         where: {
-          ...fildFilter(name, "authorName", Op.substring),
-          ...fildFilter(category, "authorCatogery", Op.eq),
+          ...filterFunction.stringFilter(name, "authorName", Op.substring),
+          ...filterFunction.stringFilter(category, "authorCatogery", Op.eq),
         },
         attributes: { exclude: ["updatedAt", "createdAt"] },
       });

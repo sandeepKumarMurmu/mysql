@@ -17,4 +17,11 @@ module.exports = {
 
     return arr.length > 0 ? [arr] : [];
   },
+  pagination: (page, limit) => {
+    limit = +limit || 5;
+    page = +page || 1;
+    let skip = (page - 1) * limit;
+
+    return { limit: limit, offset: skip };
+  },
 };
