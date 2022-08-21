@@ -5,12 +5,13 @@ const { body } = require("express-validator");
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // importing controllers
 const studentController = require("../controllers/student/studentController");
+const authriseAdmin_Student = require("../middleWare/validation/authriseAdmin_Student");
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // middleware
-const inputValidation = require("../middleWare/inputValidation/inputValidation");
-const validationMiddl = require("../middleWare/validation/validationMiddle");
-
+const errorValidation = require("../middleWare/validation/errorValidation");
+const studentInputFeildValidation = require("../middleWare/validation/studentInputFeildValidation");
+const authriseAdmin_Student = require("../middleWare/validation/authriseAdmin_Student");
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // initialing route
 const route = express.Router();
@@ -21,12 +22,13 @@ route.get("/get/:id", studentController.getStudentById);
 route.post("/get", studentController.getStudentBySearch);
 route.post(
   "/entry",
-  validationMiddl(body).nameValidation,
-  validationMiddl(body).emailValidation,
-  validationMiddl(body).addressValidation,
-  validationMiddl(body).yearValidation,
-  validationMiddl(body).streamValidation,
-  inputValidation,
+  // authriseAdmin_Student,
+  studentInputFeildValidation(body).nameValidation,
+  studentInputFeildValidation(body).emailValidation,
+  studentInputFeildValidation(body).addressValidation,
+  studentInputFeildValidation(body).yearValidation,
+  studentInputFeildValidation(body).streamValidation,
+  errorValidation,
   studentController.createStudent
 );
 

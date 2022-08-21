@@ -2,12 +2,13 @@ const { validationResult } = require("express-validator");
 
 module.exports = async (req, res, next) => {
   try {
-    console.log(validationResult(req));
     const { errors } = validationResult(req);
+    if (errors.length)
+      return res
+        .status(400)
+        .json({ data: errors.map((ele) => ele.msg), status: false });
 
-    let err = errors.map((ele) => ele.msg);
-
-    return res.status(200).json({ data: err });
+    next();
   } catch (e) {
     return res.status(400).json({
       message: "error in input validation",

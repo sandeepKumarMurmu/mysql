@@ -2,17 +2,13 @@
 const express = require("express");
 
 // importing controllers
-const { createAuthor } = require("../controllers/author/createAuthor");
-const {
-  getAuthorbyId,
-  getBySearch,
-} = require("../controllers/author/getAuthor");
+const authorController = require("../controllers/author/authorConroller");
 
 // initialing route
 const route = express.Router();
 
-route.post("/entry", createAuthor);
-route.get("/get/:id", getAuthorbyId);
-route.get("/get", getBySearch);
+route.get("/get/:id", authorController.getAuthorbyId);
+route.get("/get", authorController.getBySearch);
+route.post("/entry", authorController.createAuthor);
 
 module.exports = route;

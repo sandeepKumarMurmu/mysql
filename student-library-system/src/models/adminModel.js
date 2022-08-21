@@ -7,15 +7,24 @@ const connection = require("../config/connection");
 const { DataTypes } = require("sequelize");
 
 // ------------------------------------------------------------------------------------------------------------
-// creating and exporting year model
-module.exports = connection.define("year", {
-  yearId: {
+// creating and exporting admin model
+module.exports = connection.define("admin", {
+  adminId: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  yearName: {
+  adminName: {
     type: DataTypes.STRING(6),
+    allowNull: false,
+  },
+  adminEmail: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+    unique: true,
+  },
+  adminPassword: {
+    type: DataTypes.STRING,
     allowNull: false,
   },
 });

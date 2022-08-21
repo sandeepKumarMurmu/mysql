@@ -9,8 +9,7 @@ const yearModel = require("../../models/yearModel");
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------
 // filter functions
-const fildFilter = require("../../utils/functions/mainFilter");
-const orderFilter = require("../../utils/functions/orderFilter");
+const filters = require("../../utils/functions/filterFunction");
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------
 //exporting controllers
@@ -38,7 +37,6 @@ module.exports = {
   //get Student by queries controller
   getStudentBySearch: async (req, res) => {
     const { name, stream, order, orderByName } = req.query;
-    console.log(orderFilter(order, "yearId"));
     try {
       const studentData = await Student.findAndCountAll({
         include: [
@@ -49,11 +47,13 @@ module.exports = {
             attributes: ["streamName", "streamCode"],
           },
         ],
-        where: { ...fildFilter(name, "studentFullName", Op.substring) },
+        where: {
+          ...filters.stringFilter(name, "studentFullName", Op.substring),
+        },
         attributes: { exclude: ["updatedAt", "createdAt"] },
         order: [
-          ...orderFilter(order, "yearId"),
-          ...orderFilter(orderByName, "studentFullName"),
+          ...filters.orderFitler(order, "yearId"),
+          ...filters.orderFitler(orderByName, "studentFullName"),
         ],
       });
 
