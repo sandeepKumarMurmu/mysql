@@ -15,7 +15,7 @@ module.exports = connection.define("admin", {
     primaryKey: true,
   },
   adminName: {
-    type: DataTypes.STRING(6),
+    type: DataTypes.STRING(30),
     allowNull: false,
   },
   adminEmail: {

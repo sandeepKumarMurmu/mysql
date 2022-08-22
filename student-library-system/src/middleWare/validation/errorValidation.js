@@ -10,6 +10,7 @@ module.exports = async (req, res, next) => {
         .status(400)
         .json({ data: errors.map((ele) => ele.msg), status: false });
 
+    // return res.json({ data: "your are in create admin" });
     next();
   } catch (e) {
     return res.status(400).json({

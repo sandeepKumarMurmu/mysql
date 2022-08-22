@@ -97,7 +97,7 @@ module.exports = {
 
       return res
         .status(200)
-        .json({ message: "student created", data: studentData, status: true });
+        .json({ message: "student created", data: req.body, status: true });
     } catch (e) {
       return res.status(400).json({
         message: "something wrong inside creat student conrtoller",

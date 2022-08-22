@@ -3,31 +3,36 @@ const express = require("express");
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // importing controllers
-const studentController = require("../controllers/student/studentController");
+const adminController = require("../controllers/admin/adminController");
+const authriseAdmin_Student = require("../middleWare/validation/authriseAdmin_Student");
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // middleware
 const errorValidation = require("../middleWare/validation/errorValidation");
 const FeildValidation = require("../middleWare/validation/feildValidation");
-const authriseAdmin_Student = require("../middleWare/validation/authriseAdmin_Student");
+
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // initialing route
 const route = express.Router();
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
 // creating end points
-route.get("/get/:id", studentController.getStudentById);
-route.post("/get", studentController.getStudentBySearch);
+route.post(
+  "/login",
+  FeildValidation.emailValidation,
+  errorValidation,
+  authriseAdmin_Student.passwordValidation,
+  adminController.loginAdmin
+);
+route.get("/get/:id", adminController.getAdminById);
+route.get("/get", adminController.getAdminBySearch);
 route.post(
   "/entry",
-  authriseAdmin_Student.verifyTokenMiddle,
   FeildValidation.nameValidation,
   FeildValidation.emailValidation,
-  FeildValidation.addressValidation,
-  FeildValidation.yearValidation,
-  FeildValidation.streamValidation,
   errorValidation,
-  studentController.createStudent
+  authriseAdmin_Student.uniqueEmail,
+  adminController.createAdmin
 );
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------
