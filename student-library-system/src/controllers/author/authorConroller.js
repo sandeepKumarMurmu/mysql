@@ -35,7 +35,6 @@ module.exports = {
   // search author by query
   getBySearch: async (req, res) => {
     let { name, category } = req.query;
-
     try {
       const authorData = await Author.findAndCountAll({
         include: [

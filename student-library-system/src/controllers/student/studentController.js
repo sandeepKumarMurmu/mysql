@@ -6,6 +6,7 @@ const { Op } = require("sequelize");
 const streamModel = require("../../models/streamModel");
 const yearModel = require("../../models/yearModel");
 const studentModel = require("../../models/studentModel");
+const bookModel = require("../../models/bookModel");
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------
 // filter functions
@@ -17,14 +18,38 @@ module.exports = {
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------
   //get Student by id controller
   getStudentById: async (req, res) => {
+    const { book, year, stream } = req.query;
     try {
       const studentData = await studentModel.findByPk(+req.params.id, {
-        attributes: { exclude: ["createdAt", "updatedAt"] },
+        include: [
+          {
+            model: bookModel,
+            attributes: ["bookTitle", "bookId", "bookCatogery"],
+          },
+          {
+            model: streamModel,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+          },
+          {
+            model: yearModel,
+            attributes: { exclude: ["createdAt", "updatedAt"] },
+          },
+        ],
       });
 
-      return res
-        .status(200)
-        .json({ message: "student recieved", data: studentData, status: true });
+      return res.status(200).json({
+        message: "student recieved",
+        data: {
+          id: studentData.studentId,
+          fullName: studentData.studentFullName,
+          email: studentData.studentEmail,
+          address: studentData.studentAddress,
+          stream: stream && studentData.stream,
+          year: year && studentData.year,
+          book: book && studentData.books,
+        },
+        status: true,
+      });
     } catch (e) {
       return res.status(400).json({
         message: "something wrong inside  student conrtoller",

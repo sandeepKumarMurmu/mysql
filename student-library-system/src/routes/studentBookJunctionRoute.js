@@ -1,14 +1,17 @@
+// ---------------------------------------------------------------------------------------------------
 // importing Route module from library
 const express = require("express");
 
+// ---------------------------------------------------------------------------------------------------
 // importing controllers
-const {
-  createStudentBookJunction,
-} = require("../controllers/student_book_junction/create_student_book_junction");
-
+const studentBookJunction = require("../controllers/student_book_junction/student_book_junction");
+// ---------------------------------------------------------------------------------------------------
 // initialing route
 const route = express.Router();
-
-route.post("/", createStudentBookJunction);
+// ---------------------------------------------------------------------------------------------------
+// routes
+route.get("/get", studentBookJunction.destroyStudentBookJunction);
+route.post("/entry", studentBookJunction.creatStudentBookJunction);
+// route.post("/update", studentBookJunction.creatStudentBookJunction);
 
 module.exports = route;
