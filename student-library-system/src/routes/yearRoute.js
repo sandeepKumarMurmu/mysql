@@ -1,14 +1,18 @@
+// -----------------------------------------------------------------------------------------------------------------
 // importing Route module from library
 const express = require("express");
 
+// -----------------------------------------------------------------------------------------------------------------
 // importing controllers
-const { createYear } = require("../controllers/year/createYear");
-const { getYear } = require("../controllers/year/getYear");
+const yearController = require("../controllers/year/yearController");
 
+// -----------------------------------------------------------------------------------------------------------------
 // initialing route
 const route = express.Router();
 
-route.post("/entry", createYear);
-route.get("/get", getYear);
+// -----------------------------------------------------------------------------------------------------------------
+// end points
+route.post("/entry", yearController.createYear);
+route.get("/get", yearController.getYear);
 
 module.exports = route;

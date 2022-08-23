@@ -18,7 +18,7 @@ module.exports = {
   // -------------------------------------------------------------------------------------------------------------------------------------------------------------
   //get Student by id controller
   getStudentById: async (req, res) => {
-    const { book, year, stream } = req.query;
+    const { books, year, stream } = req.query;
     try {
       const studentData = await studentModel.findByPk(+req.params.id, {
         include: [
@@ -46,7 +46,7 @@ module.exports = {
           address: studentData.studentAddress,
           stream: stream && studentData.stream,
           year: year && studentData.year,
-          book: book && studentData.books,
+          book: books && studentData.books,
         },
         status: true,
       });
