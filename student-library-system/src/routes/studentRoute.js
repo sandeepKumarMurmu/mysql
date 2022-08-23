@@ -18,6 +18,7 @@ const route = express.Router();
 // creating end points
 route.get("/get/:id", studentController.getStudentById);
 route.post("/get", studentController.getStudentBySearch);
+route.get("/update/:id", studentController.updateStudent);
 route.post(
   "/entry",
   authriseAdmin_Student.verifyTokenMiddle,

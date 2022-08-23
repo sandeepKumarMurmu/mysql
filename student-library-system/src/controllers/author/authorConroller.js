@@ -66,6 +66,17 @@ module.exports = {
   },
 
   // ------------------------------------------------------------------------------------------------------------------------------------------------
+  // update author and book relation
+  updateAuthor: async (req, res) => {
+    try {
+      const authorData = await Author.findByPk(req.params.id);
+
+      return res.status(200).json({ data: authorData });
+    } catch (e) {
+      return res.status.json({ message: "error in update controller ", e });
+    }
+  },
+  // ------------------------------------------------------------------------------------------------------------------------------------------------
   // create author
   createAuthor: async (req, res) => {
     const { name, catogery } = req.body;

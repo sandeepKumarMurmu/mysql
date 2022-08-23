@@ -8,6 +8,7 @@ const authorController = require("../controllers/author/authorConroller");
 const route = express.Router();
 
 route.get("/get/:id", authorController.getAuthorbyId);
+route.get("/update/:id", authorController.updateAuthor);
 route.get("/get", authorController.getBySearch);
 route.post("/entry", authorController.createAuthor);
 

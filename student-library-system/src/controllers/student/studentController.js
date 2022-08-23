@@ -3,9 +3,9 @@ const { Op } = require("sequelize");
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------
 // models
-const Student = require("../../models/studentModel");
 const streamModel = require("../../models/streamModel");
 const yearModel = require("../../models/yearModel");
+const studentModel = require("../../models/studentModel");
 
 // -------------------------------------------------------------------------------------------------------------------------------------------------------------
 // filter functions
@@ -18,7 +18,7 @@ module.exports = {
   //get Student by id controller
   getStudentById: async (req, res) => {
     try {
-      const studentData = await Student.findByPk(+req.params.id, {
+      const studentData = await studentModel.findByPk(+req.params.id, {
         attributes: { exclude: ["createdAt", "updatedAt"] },
       });
 
@@ -38,7 +38,7 @@ module.exports = {
   getStudentBySearch: async (req, res) => {
     const { name, stream, order, orderByName, limit, page } = req.query;
     try {
-      const studentData = await Student.findAndCountAll({
+      const studentData = await studentModel.findAndCountAll({
         include: [
           {
             model: yearModel,
@@ -105,6 +105,17 @@ module.exports = {
         status: false,
         e,
       });
+    }
+  },
+
+  updateStudent: async (req, res) => {
+    try {
+      const studentData = await studentModel.update(req.body, {
+        where: { studentId: req.params.id },
+      });
+      return res.status(200).json({ data: studentData });
+    } catch (e) {
+      return res.status(400).json({ message: "error in update student", e });
     }
   },
 };
